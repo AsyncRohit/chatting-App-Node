@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Chatting App</title>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for message bubbles */
+        .message-bubble {
+            max-width: 70%;
+        }
+
+        .message-sent {
+            background-color: #DCF8C6;
+        }
+
+        .message-received {
+            background-color: #EAEAEA;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-white py-4 px-4 shadow-md flex justify-between items-center">
+        <h1 class="text-lg font-semibold text-gray-800">Chatting App</h1>
+    </header>
+
+    <!-- Chat Messages -->
+    <!-- <div class="flex-1 p-4 overflow-y-auto message"> -->
+        <!-- Example received message -->
+        <!-- <div class="flex items-start mb-4">
+            <div class="message-bubble p-2 rounded-lg message-received">
+                <p class="text-sm text-gray-800">Hello!</p>
+            </div>
+        </div> -->
+
+        <!-- Example sent message -->
+        <div class="flex items-end justify-end mb-4 message">
+            
+        </div>
+
+        <!-- Repeat message structure for each message -->
+    </div>
+
+    <!-- Message Input -->
+    <div class="bg-white py-2 px-4 shadow-md flex items-center">
+        <input placeholder="Type your message..." class="w-full message px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"></input>
+        <button class="ml-4 px-4 py-2 send bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">Send</button>
+    </div>
+
+</body>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script>
+const socket= io();
+const input=document.querySelector(".message");
+
+document.querySelector(".send")
+.addEventListener("click", ()=>{
+    socket.emit("message", input.value);
+    console.log(input.value)
+})
+
+const container=``;
+socket.on("message",function(message){
+    container=`
+    <div class="<div class="message-bubble p-2 rounded-lg message-sent">
+                <p class="text-sm text-gray-800 message-sent">${message}</p>
+            </div>`
+
+    document.querySelector(".message").innerHTML+=container
+})
+</script>
+
+</html>
